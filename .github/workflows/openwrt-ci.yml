@@ -7,7 +7,7 @@
 # <https://github.com/KFERMercer/OpenWrt-CI>
 # 
 
-name: 测试固件1
+name: 测试固件
 
 on:
 #  schedule:
@@ -20,7 +20,7 @@ jobs:
 
   build_openwrt:
 
-    name: Build OpenWrt and release
+    name: 编译OpenWrt路由系统固件
     runs-on: ubuntu-18.04
 
     steps:
@@ -29,7 +29,7 @@ jobs:
         with:
           ref: master
 
-      - name: Space cleanup
+      - name: 初始化编译环境
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
@@ -139,16 +139,16 @@ jobs:
           du -h --max-depth=1 ./build_dir
           du -h --max-depth=1 ./bin
 
-      - name: Prepare artifact
+      - name: 处理固件信息1
         run: find ./bin/targets/ -type d -name "packages" | xargs rm -rf {}
 
-      - name: Upload artifact
+      - name: 处理固件信息2
         uses: actions/upload-artifact@master
         with:
           name: OpenWrt_firmware
           path: ./bin/targets/
 
-      - name: Create release
+      - name: 处理固件信息3
         if: github.event == 'push'
         id: create_release
         uses: actions/create-release@v1.0.1
@@ -160,7 +160,7 @@ jobs:
           draft: false
           prerelease: false      
 
-      - name: Upload release asset
+      - name: 输出编译固件
         if: github.event == 'push'
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1.0.2

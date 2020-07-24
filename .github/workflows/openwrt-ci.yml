@@ -42,11 +42,13 @@ jobs:
           sudo -E apt-get clean
 
           df -h
-      - name: 同步最新的源码
+          
+      - name: 同步L大LEDE源码
         run: |
           git remote add openwrt https://github.com/coolsnowwolf/lede.git
           git pull openwrt master
           git remote -v
+          
       - name: 更新编译源
         run: |
           ./scripts/feeds update -a
